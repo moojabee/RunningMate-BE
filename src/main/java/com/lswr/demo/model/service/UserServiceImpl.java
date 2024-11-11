@@ -19,14 +19,14 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
     public boolean isEmailDuplicated(String email) {
-        Optional<User> user = userDao.selectUserByEmail(email);
-        if(user.isEmpty()) return false;
+        User user = userDao.selectUserByEmail(email);
+        if(user == null) return false;
         return true;
     }
     
     public boolean isNicknameDuplicated(String nickname) {
-        Optional<User> user = userDao.selectUserByNickname(nickname);
-        if(user.isEmpty()) return false;
+        User user = userDao.selectUserByNickname(nickname);
+        if(user ==null) return false;
         return true;
     } 
 	
@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public User getUser(String email) {
-		Optional<User> user = userDao.selectUserByEmail(email);
-		if(user.isEmpty()) return null;
-		return user.get();
+		User user = userDao.selectUserByEmail(email);
+		if(user==null) return null;
+		return user;
 	}
 
 	@Override
@@ -50,12 +50,19 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean loginUser(LoginDto loginDto) {
-		Optional<User> user = userDao.login(loginDto);
-		return user.isPresent();
+		User user = userDao.login(loginDto);
+		return user!=null;
 	}
 
 	@Override
 	public void updateUser(User user) {
 		userDao.updateUser(user);
 	}
+
+	@Override
+	public User getUserById(Long userId) {
+		User user = userDao.selectUserById(userId);
+		return user;
+	}
+	
 }

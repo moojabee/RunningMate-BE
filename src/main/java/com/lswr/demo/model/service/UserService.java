@@ -27,4 +27,7 @@ public interface UserService {
 	
 	// 회원정보 변경
 	public void updateUser(User user);
+	
+	// 유저 정보 불러오기
+	public User getUserById(Long userId);
 }

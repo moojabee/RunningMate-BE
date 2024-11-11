@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lswr.demo.model.dao.UserDao">
+	
 	<!-- email User 조회 -->
 	<select id="selectUserByEmail" parameterType="String"
 		resultType="User">
@@ -10,6 +11,7 @@
 		FROM user
 		WHERE email = #{email}
 	</select>
+	
 	<!-- nickname User 조회 -->
 	<select id="selectUserByNickname" parameterType="String"
 		resultType="User">
@@ -17,17 +19,29 @@
 		FROM user
 		where nickname = #{nickname}
 	</select>
+	
+	<!-- id User 조회 -->
+	<select id="selectUserById" parameterType="int"
+		resultType="User">
+		SELECT *
+		FROM user
+		where user_id = #{userId}
+	</select>
+	
+	
 	<!-- User 로그인 -->
 	<select id="login" parameterType="LoginDto" resultType="User">
 		SELECT *
 		FROM user
 		where email = #{email} and password = #{password}
 	</select>
+	
 	<!-- UserList 조회 -->
 	<select id="selectAll" resultType="User">
 		SELECT *
 		FROM user
 	</select>
+	
 	<!-- User 추기 -->
 	<insert id="insertUser" parameterType="User">
 		INSERT INTO USER (email, password, name, nickname, address
