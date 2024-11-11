@@ -1,6 +1,8 @@
 package com.lswr.demo.controller;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.springframework.web.bind.annotation.*;
 
 import com.lswr.demo.model.dto.ChatMessage;
@@ -52,6 +54,7 @@ public class ChatRoomController {
     // 6. 새로운 채팅방 생성
     @PostMapping("/new-room")
     public boolean createChatRoom(@RequestBody ChatRoom chatRoom) {
+    	chatRoom.setRoomId(UUID.randomUUID().toString());
         return chatService.createChatRoom(chatRoom);
     }
 }
