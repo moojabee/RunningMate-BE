@@ -50,7 +50,7 @@ public class ChatRoomController {
     }
     
     // 6. 새로운 채팅방 생성
-    @PostMapping("/room")
+    @PostMapping("/new-room")
     public boolean createChatRoom(@RequestBody ChatRoom chatRoom) {
         return chatService.createChatRoom(chatRoom);
     }
