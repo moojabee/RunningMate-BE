@@ -10,6 +10,12 @@
 		FROM user
 		WHERE email = #{email}
 	</select>
+		<select id="selectUserById" parameterType="int"
+		resultType="User">
+		SELECT *
+		FROM user
+		WHERE user_id = #{user_id}
+	</select>
 	<!-- nickname User 조회 -->
 	<select id="selectUserByNickname" parameterType="String"
 		resultType="User">

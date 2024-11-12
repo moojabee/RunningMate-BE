@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lswr.demo.model.dao.ChatDao">
+
+    <!-- 1. 방에 있는 유저 리스트 조회 -->
+    <select id="selectUserListByChatRoomId" parameterType="String" resultType="User">
+        SELECT *
+        FROM user
+        WHERE room_id = #{roomId}
+    </select>
+
+    <!-- 2. 방에 유저 추가 -->
+    <insert id="insertUserInChatRoom">
+        INSERT INTO chat_room_user (user_id, room_id)
+        VALUES (#{userId}, #{roomId})
+    </insert>
+
+    <!-- 3. 방에 유저 삭제 -->
+    <delete id="deleteUserInChatRoom">
+        DELETE FROM chat_room_user
+        WHERE user_id = #{userId} AND room_id = #{roomId}
+    </delete>
+
+    <!-- 4. 유저가 있는 방 리스트 조회 -->
+    <select id="selectChatRoomListByUserId" parameterType="Long" resultType="ChatRoom">
+        SELECT *
+        FROM chat_room
+        WHERE room_id IN (
+            SELECT room_id
+            FROM chat_room_user
+            WHERE user_id = #{userId}
+        )
+    </select>
+
+    <!-- 5. 방 추가 -->
+    <insert id="insertChatRoom" parameterType="ChatRoom">
+        INSERT INTO chat_room (room_id, room_name, created_date)
+        VALUES (#{roomId}, #{roomName}, #{createdDate})
+    </insert>
+
+    <!-- 6. 방 검색 -->
+    <select id="searchChatRoomByName" parameterType="String" resultType="ChatRoom">
+        SELECT *
+        FROM chat_room
+        WHERE room_name LIKE CONCAT('%', #{roomName}, '%')
+    </select>
+
+    <!-- 7. 방 안에 있는 메시지 리스트 조회 -->
+    <select id="selectMessageListByRoomId" parameterType="String" resultType="com.lswr.demo.model.dto.ChatMessage">
+        SELECT *
+        FROM message
+        WHERE room_id = #{roomId}
+        ORDER BY sent_date ASC
+    </select>
+
+    <!-- 8. 방에 메시지 추가 -->
+    <insert id="insertMessageInChatRoom" parameterType="com.lswr.demo.model.dto.ChatMessage">
+        INSERT INTO message (room_id, user_id, content, sent_date)
+        VALUES (#{roomId}, #{userId}, #{content}, #{sentDate})
+    </insert>
+
+</mapper>

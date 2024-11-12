@@ -68,7 +68,7 @@ public class UserController {
 	public ResponseEntity<String> loginUser(@RequestBody LoginDto loginDto){
 		// 로그인 성공
 		if(userService.loginUser(loginDto)) {
-			User user = userService.getUser(loginDto.getEmail());
+			User user = userService.getUserByEmail(loginDto.getEmail());
             String token = tokenService.createToken(String.valueOf(user.getUserId())); // JWT 생성
             log.info("userId:"+String.valueOf(user.getUserId()));
             HttpHeaders headers = new HttpHeaders();

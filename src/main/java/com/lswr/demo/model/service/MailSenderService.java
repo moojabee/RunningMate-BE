@@ -35,7 +35,7 @@ public class MailSenderService {
 	        
 	        // 비밀번호 변경 후 템플릿에 값 치환
 	        String newPassword = changePassword(email.getEmail());
-	        String userName = userService.getUser(email.getEmail()).getName() + "님 안녕하세요";
+	        String userName = userService.getUserByEmail(email.getEmail()).getName() + "님 안녕하세요";
 
 	        // {{number}}와 {{name}} 치환
 	        htmlContent = htmlContent.replace("{{number}}", newPassword)
@@ -60,7 +60,7 @@ public class MailSenderService {
 	    }
 	}	
 	private String changePassword(String email) {
-		User user = userService.getUser(email);
+		User user = userService.getUserByEmail(email);
 		String newPassword = randomString();
 		user.setPassword(newPassword);
 		userService.updateUser(user);
